@@ -14,24 +14,31 @@ namespace ExamenJustinGomezcoello.ViewModels
 
         public HistorialViewModel()
         {
-            _database = new RepositorySQLITE(Path.Combine(FileSystem.AppDataDirectory, "jgomezcoello_Peliculass.db3"));
+            _database = new RepositorySQLITE(Path.Combine(FileSystem.AppDataDirectory, "jgomezcoello_Peliculas.db3"));
         }
 
         public async Task CargarPeliculasAsync()
         {
-
-
-            var listaPeliculas = await _database.ObtenerPeliculasAsync();
-            Peliculas.Clear();
-
-            foreach (var pelicula in listaPeliculas)
+            try
             {
-                pelicula.Detalles = $"Nombre Pelicula: {pelicula.Titulo}, Genero: {pelicula.Genero},Actor principal: {pelicula.Actor},Premios: {pelicula.Premios}, Link: {pelicula.Sitio} NombreBD: {pelicula.Usuario}";
-                Peliculas.Add(pelicula);
+                
+
+                var listaPeliculas = await _database.ObtenerPeliculasAsync();
+                Peliculas.Clear();
+
+                foreach (var pelicula in listaPeliculas)
+                {
+                    pelicula.Detalles = $"🎬 Nombre: {pelicula.Titulo}, 🎭 Género: {pelicula.Genero}, 🎬 Actor Principal: {pelicula.Actor}, 🏆 Premios: {pelicula.Premios}, 🔗 Link: {pelicula.Sitio} 👤 JGomezcoello: {pelicula.Usuario}";
+                    Peliculas.Add(pelicula);
+                }
+
+                OnPropertyChanged(nameof(Peliculas));
+                
             }
-
-            OnPropertyChanged(nameof(Pelicula));
-
+            catch (Exception ex)
+            {
+                
+            }
         }
     }
 }
