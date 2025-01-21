@@ -10,6 +10,7 @@ namespace ExamenJustinGomezcoello.Models
         public string Titulo { get; set; } = string.Empty;
         public string Genero { get; set; } = string.Empty;
         public string Actor { get; set; } = string.Empty;
+
         public string Premios { get; set; } = string.Empty;
         public string Sitio { get; set; } = string.Empty;
         public string Usuario { get; set; } = "JGomezcoello";
