@@ -1,0 +1,54 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ExamenJustinGomezcoello.Views.MainPage"
+             BackgroundColor="#121212">
+
+    <VerticalStackLayout Padding="20">
+        <Label Text="🔍 Buscador de Peliculas"
+               FontSize="26"
+               FontAttributes="Bold"
+               TextColor="White"
+               HorizontalOptions="Center"
+               Margin="0,10,0,20"/>
+
+        <Entry x:Name="jgomezcoello_txtPelicula"
+               Text="{Binding NombrePelicula}"
+               Placeholder="Ingrese el nombre de la pelicula que quiere consultar"
+               BackgroundColor="White"
+               TextColor="Black"
+               PlaceholderColor="Gray"
+               HeightRequest="50"
+               Margin="0,10,0,10"
+               />
+
+        <Button Text="🔎 Buscar"
+                Command="{Binding BuscarCommand}"
+                BackgroundColor="#007BFF"
+                TextColor="White"
+                CornerRadius="10"
+                HeightRequest="50"
+                FontAttributes="Bold"
+                Margin="0,5,0,10"/>
+
+        <Button Text="🗑 Limpiar"
+                Command="{Binding LimpiarCommand}"
+                BackgroundColor="#6C757D"
+                TextColor="White"
+                CornerRadius="10"
+                HeightRequest="50"
+                FontAttributes="Bold"
+                Margin="0,5,0,10"/>
+
+        <Border BackgroundColor="#1E1E1E"
+            StrokeThickness="2"
+            Stroke="#007BFF"
+            Margin="0,20,0,0">
+            <Label x:Name="jgomezcoello_lblResultado"
+               Text="{Binding Resultado}"
+               FontSize="18"
+               TextColor="White"
+               LineBreakMode="WordWrap"/>
+        </Border>
+
+    </VerticalStackLayout>
+</ContentPage>
