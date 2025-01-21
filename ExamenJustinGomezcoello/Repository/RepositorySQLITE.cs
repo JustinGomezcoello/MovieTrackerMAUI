@@ -15,7 +15,7 @@ namespace ExamenJustinGomezcoello.Repository
             _database.CreateTableAsync<Pelicula>().Wait();
         }
 
-        public Task<int> InsertarPaisAsync(Pelicula pelicula)
+        public Task<int> InsertarPeliculaAsync(Pelicula pelicula)
         {
             return _database.InsertAsync(pelicula);
         }

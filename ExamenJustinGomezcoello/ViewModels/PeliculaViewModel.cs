@@ -20,8 +20,7 @@ namespace ExamenJustinGomezcoello.ViewModels
 
         public PeliculaViewModel()
         {
-            string dbPath = Path.Combine(FileSystem.AppDataDirectory, "jgomezcoello_Peliculass.db3");
-            _database = new RepositorySQLITE(dbPath);
+            _database = new RepositorySQLITE(Path.Combine(FileSystem.AppDataDirectory, "jgomezcoello_Peliculass.db3"));
 
             BuscarCommand = new Command(async () => await BuscarPelicula());
             LimpiarCommand = new Command(Limpiar);
@@ -52,32 +51,55 @@ namespace ExamenJustinGomezcoello.ViewModels
 
         private async Task BuscarPelicula()
         {
-
-
             if (string.IsNullOrWhiteSpace(NombrePelicula))
             {
-                Resultado = "Ingresa el nombre de una pelicula";
-
+                Resultado = "Ingresa el nombre de una película";
                 return;
             }
 
-            string url = $"https://freetestapi.com/api/v1/movies?search={NombrePelicula}&limit=1";
-            using HttpClient client = new();
-            var response = await client.GetStringAsync(url);
-            var peliculas = JsonConvert.DeserializeObject<List<Pelicula>>(response);
+            string url = $"https://freetestapi.com/api/v1/movies?search={NombrePelicula}";
 
-            if (peliculas == null || peliculas.Count == 0)
+            try
             {
-                Resultado = "No se encontraron peliculas con ese resultado que me indicas";
-                return;
+                using HttpClient client = new();
+                var response = await client.GetStringAsync(url);
+                var peliculas = JsonConvert.DeserializeObject<List<Pelicula>>(response);
+
+                if (peliculas == null || peliculas.Count == 0)
+                {
+                    Resultado = "No se encontraron películas con ese resultado que me indicas";
+                    return;
+                }
+
+                var pelicula = peliculas.First();
+
+                // Formatear la información de la película
+                Resultado = $"Título: {pelicula.Titulo}\n" +
+                            $"Género: {pelicula.Genero}\n" +
+                            $"Actor Principal: {pelicula.Actor}\n" +
+                            $"Premios: {pelicula.Premios}\n" +
+                            $"Sitio: {pelicula.Sitio}\n" +
+                            $"Usuario: {pelicula.Usuario}";
+
+                // Guardar la película en la base de datos (asegúrate de tener un modelo adecuado)
+                var nuevaPelicula = new Pelicula
+                {
+                    Titulo = pelicula.Titulo,
+                    Genero = pelicula.Genero,
+                    Actor = pelicula.Actor,
+                    Premios = pelicula.Premios,
+                    Sitio = pelicula.Sitio,
+                    Usuario = "JGomezcoello"
+                };
+
+                await _database.InsertarPeliculaAsync(nuevaPelicula);
             }
-
-            var pelicula = peliculas.First();
-            Resultado = $"Titulo: {pelicula.Titulo}\nGenero: {pelicula.Genero}\nActor Principal: {pelicula.Actor}\nPremios: {pelicula.Premios}\nSitio: {pelicula.Sitio}\\nJGomezcoello: {pelicula.Usuario}";
-
-
-
+            catch (Exception ex)
+            {
+                Resultado = $"Error en la búsqueda: {ex.Message}";
+            }
         }
+
 
         private void Limpiar()
         {
