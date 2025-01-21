@@ -7,7 +7,6 @@ using System.Windows.Input;
 using Microsoft.Maui.Controls;
 using ExamenJustinGomezcoello.Repository;
 using ExamenJustinGomezcoello.Models;
-using ExamenJustinGomezcoello.Repository;
 using Newtonsoft.Json;
 
 namespace ExamenJustinGomezcoello.ViewModels
@@ -78,12 +77,13 @@ namespace ExamenJustinGomezcoello.ViewModels
 
 
 
-            private void Limpiar()
-            {
+        }
 
-                NombrePelicula = string.Empty;
-                Resultado = string.Empty;
-            }
+        private void Limpiar()
+        {
+
+            NombrePelicula = string.Empty;
+            Resultado = string.Empty;
         }
     }
 }

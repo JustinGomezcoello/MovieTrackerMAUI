@@ -1,25 +1,31 @@
-﻿namespace ExamenJustinGomezcoello
+﻿using Microsoft.Maui.Controls;
+using ExamenJustinGomezcoello.ViewModels;
+using System.Threading.Tasks;
+
+namespace ExamenJustinGomezcoello.Views
 {
     public partial class MainPage : ContentPage
     {
-        int count = 0;
-
         public MainPage()
         {
             InitializeComponent();
+            BindingContext = new PeliculaViewModel();
         }
 
-        private void OnCounterClicked(object sender, EventArgs e)
+        private async Task AnimarBoton(Button boton)
         {
-            count++;
+            await boton.ScaleTo(0.9, 100, Easing.Linear);
+            await boton.ScaleTo(1.0, 100, Easing.Linear);
+        }
 
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
+        private async void Buscar_Clicked(object sender, EventArgs e)
+        {
+            await AnimarBoton(sender as Button);
+        }
 
-            SemanticScreenReader.Announce(CounterBtn.Text);
+        private async void Limpiar_Clicked(object sender, EventArgs e)
+        {
+            await AnimarBoton(sender as Button);
         }
     }
-
 }
