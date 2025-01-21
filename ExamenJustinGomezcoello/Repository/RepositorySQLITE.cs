@@ -20,7 +20,7 @@ namespace ExamenJustinGomezcoello.Repository
             return _database.InsertAsync(pelicula);
         }
 
-        public Task<List<Pelicula>> ObtenerPaisesAsync()
+        public Task<List<Pelicula>> ObtenerPeliculasAsync()
         {
             return _database.Table<Pelicula>().ToListAsync();
         }
